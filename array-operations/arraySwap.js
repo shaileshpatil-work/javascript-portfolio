@@ -35,4 +35,16 @@ function incDec(userIndex, userDirection, userArray) {
   }
 }
 
-swap(userIndex, userDirection, a);
+function CreateDuplicate(userIndex, a){
+  a.splice(userIndex, 1, a[userIndex], a[userIndex]);
+  console.log(a);
+}
+
+function removeItem(userIndex, a){
+  a.splice(userIndex, 1);
+  console.log(a);
+}
+
+removeItem(userIndex, a)
+CreateDuplicate(userIndex, a)
+swap(userIndex, userDirection, a)
