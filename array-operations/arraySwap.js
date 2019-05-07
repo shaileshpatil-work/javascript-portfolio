@@ -36,13 +36,23 @@ function incDec(userIndex, userDirection, userArray) {
 }
 
 function CreateDuplicate(userIndex, a){
-  a.splice(userIndex, 1, a[userIndex], a[userIndex]);
-  console.log(a);
+  if ((userIndex < a.length) && (userIndex > 0)){
+    a.splice(userIndex, 1, a[userIndex], a[userIndex]);
+    console.log(a);
+  }
+  else{
+    console.log("invalid");
+  }
 }
 
 function removeItem(userIndex, a){
-  a.splice(userIndex, 1);
-  console.log(a);
+  if ((userIndex < a.length) && (userIndex > 0)) {
+    a.splice(userIndex, 1);
+    console.log(a);
+  }
+  else {
+    console.log("invalid");
+  }
 }
 
 removeItem(userIndex, a)
