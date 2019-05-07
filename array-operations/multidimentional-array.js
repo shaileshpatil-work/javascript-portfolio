@@ -89,6 +89,6 @@ function removeItem(outerArrayIndex, innerArrayIndex, multiArray) {
 }
 
 
-// removeItem(outerArrayIndex, innerArrayIndex, multiArray);
-// CreateDuplicate(outerArrayIndex, innerArrayIndex, multiArray);
+removeItem(outerArrayIndex, innerArrayIndex, multiArray);
+CreateDuplicate(outerArrayIndex, innerArrayIndex, multiArray);
 multiArraySwap(outerArrayIndex, innerArrayIndex, userDirection, multiArray);
