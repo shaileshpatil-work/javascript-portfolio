@@ -38,7 +38,7 @@ function incDec(userIndex, userDirection, userArray) {
 }
 
 function multiArraySwap(outerArrayIndex, innerArrayIndex, userDirection, multiArray) {
-    if (innerArrayIndex > 0 && innerArrayIndex < multiArray[innerArrayIndex].length) {
+    if (innerArrayIndex > 0 && innerArrayIndex < multiArray[outerArrayIndex].length) {
         if (((innerArrayIndex == 0) && (userDirection == "up")) || ((innerArrayIndex == (multiArray.length - 1)) && (userDirection == "down"))) {
             console.log("invalid");
         }
