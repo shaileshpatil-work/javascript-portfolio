@@ -6,7 +6,7 @@ console.log(userIndex);
 console.log(userDirection);
 
 function swap(userIndex, userDirection, a) {
-  if ((userIndex > 0) && (userIndex < a.length)) {
+  if ((userIndex >= 0) && (userIndex < a.length)) {
     if (((userIndex == 0) && (userDirection == "up")) || ((userIndex == (a.length - 1)) && (userDirection == "down"))) {
       console.log("invalid");
     } else {
@@ -36,7 +36,7 @@ function incDec(userIndex, userDirection, userArray) {
 }
 
 function CreateDuplicate(userIndex, a){
-  if ((userIndex < a.length) && (userIndex > 0)){
+  if ((userIndex < a.length) && (userIndex >= 0)){
     a.splice(userIndex, 1, a[userIndex], a[userIndex]);
     console.log(a);
   }
@@ -46,7 +46,7 @@ function CreateDuplicate(userIndex, a){
 }
 
 function removeItem(userIndex, a){
-  if ((userIndex < a.length) && (userIndex > 0)) {
+  if ((userIndex < a.length) && (userIndex >= 0)) {
     a.splice(userIndex, 1);
     console.log(a);
   }
