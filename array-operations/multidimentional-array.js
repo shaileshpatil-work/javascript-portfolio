@@ -8,7 +8,7 @@ console.log(userDirection);
 
 
 function multiArraySwap(outerArrayIndex, innerArrayIndex, userDirection, multiArray) {
-    if (innerArrayIndex > 0 && innerArrayIndex < multiArray[outerArrayIndex].length) {
+    if (innerArrayIndex >= 0 && innerArrayIndex < multiArray[outerArrayIndex].length) {
         if (((innerArrayIndex == 0) && (userDirection == "up")) || ((innerArrayIndex == (multiArray.length - 1)) && (userDirection == "down"))) {
             console.log("invalid");
         }
@@ -39,7 +39,7 @@ function multiArrayIncDec(outerArrayIndex, innerArrayIndex, userDirection, multi
 }
 
 function CreateDuplicate(outerArrayIndex, innerArrayIndex, multiArray) {
-    if ((innerArrayIndex < multiArray[outerArrayIndex].length) && (innerArrayIndex > 0)) {
+    if ((innerArrayIndex < multiArray[outerArrayIndex].length) && (innerArrayIndex >= 0)) {
         multiArray[outerArrayIndex].splice(innerArrayIndex, 0, multiArray[outerArrayIndex][innerArrayIndex]);
         console.log(multiArray);
     }
@@ -49,7 +49,7 @@ function CreateDuplicate(outerArrayIndex, innerArrayIndex, multiArray) {
 }
 
 function removeItem(outerArrayIndex, innerArrayIndex, multiArray) {
-    if ((innerArrayIndex < multiArray[outerArrayIndex].length) && (innerArrayIndex > 0)) {
+    if ((innerArrayIndex < multiArray[outerArrayIndex].length) && (innerArrayIndex >= 0)) {
         multiArray[outerArrayIndex].splice(innerArrayIndex, 1);
         console.log(multiArray);
     }
