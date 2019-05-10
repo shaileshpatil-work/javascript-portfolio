@@ -1,18 +1,18 @@
-const multiArray = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
-console.log(multiArray);
+// const multiArray = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
+// console.log(multiArray);
 const args = process.argv.slice(2);
-const [outerArrayIndex, userDirection] = args;
-console.log(outerArrayIndex);
-console.log(userDirection);
+const [outerArrayIndex, userDirection, multiArray] = args;
+// console.log(outerArrayIndex);
+// console.log(userDirection);
 
 
-function multiArraySwap(outerArrayIndex, userDirection, multiArray) {
+function multiArraySwap(outerArrayIndex, multiArray, userDirection) {
     if (outerArrayIndex >= 0 && outerArrayIndex < multiArray.length) {
         if (((outerArrayIndex == 0) && (userDirection == "up")) || ((outerArrayIndex == (multiArray.length - 1)) && (userDirection == "down"))) {
             console.log("invalid");
         }
         else {
-            multiArrayIncDec(outerArrayIndex, userDirection, multiArray);
+            multiArrayIncDec(outerArrayIndex, multiArray, userDirection);
         }
     }
     else {
@@ -20,7 +20,7 @@ function multiArraySwap(outerArrayIndex, userDirection, multiArray) {
     }
 }
 
-function multiArrayIncDec(outerArrayIndex, userDirection, multiArray) {
+function multiArrayIncDec(outerArrayIndex, multiArray, userDirection) {
     if (userDirection == "up") {
         let currentIndex = multiArray[outerArrayIndex];
         let previndex = multiArray[outerArrayIndex - 1];
@@ -31,6 +31,7 @@ function multiArrayIncDec(outerArrayIndex, userDirection, multiArray) {
     else {
         let currentIndex = multiArray[outerArrayIndex];
         let nextIndex = multiArray[Number(outerArrayIndex) + 1];
+        multiArray[Number(outerArrayIndex) + 1] = currentIndex;
         multiArray[outerArrayIndex] = nextIndex;
         console.log(multiArray);
     }
@@ -57,6 +58,16 @@ function removeItem(outerArrayIndex, multiArray) {
 }
 
 
-removeItem(outerArrayIndex, multiArray);
-// CreateDuplicate(outerArrayIndex, multiArray);
-// multiArraySwap(outerArrayIndex, userDirection, multiArray);
+// function arrayOperations(outerArrayIndex, multiArray, userDirection) {
+    if (outerArrayIndex && multiArray && userDirection) {
+        console.log("first");
+        multiArraySwap(outerArrayIndex, multiArray, userDirection);
+    }
+    else {
+        console.log("down");
+        removeItem(outerArrayIndex, multiArray);
+        CreateDuplicate(outerArrayIndex, multiArray);
+    }
+// }
+
+// arrayOperations(outerArrayIndex, multiArray, userDirection);
