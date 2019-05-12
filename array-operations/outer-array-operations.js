@@ -32,6 +32,7 @@ function multiArrayIncDec(outerArrayIndex, userDirection, multiArray) {
         let currentIndex = multiArray[outerArrayIndex];
         let nextIndex = multiArray[Number(outerArrayIndex) + 1];
         multiArray[outerArrayIndex] = nextIndex;
+        multiArray[Number(outerArrayIndex) + 1] = currentIndex;
         console.log(multiArray);
     }
 }
@@ -57,6 +58,21 @@ function removeItem(outerArrayIndex, multiArray) {
 }
 
 
-removeItem(outerArrayIndex, multiArray);
+// removeItem(outerArrayIndex, multiArray);
 // CreateDuplicate(outerArrayIndex, multiArray);
 // multiArraySwap(outerArrayIndex, userDirection, multiArray);
+
+function opAll(outerArrayIndex, userDirection = null, multiArray){
+    if (outerArrayIndex && userDirection && multiArray){
+        console.log("first");
+        multiArraySwap(outerArrayIndex, userDirection, multiArray);
+    }
+    else{
+        console.log("second");
+        console.log(userDirection);
+        removeItem(outerArrayIndex, multiArray);
+        CreateDuplicate(outerArrayIndex, multiArray);
+    }
+}
+
+opAll(outerArrayIndex, userDirection, multiArray);

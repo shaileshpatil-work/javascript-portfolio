@@ -1,6 +1,6 @@
 const a = [20, 30, 40, 70, 80];
 console.log(a);
-const args = process.argv.slice(2);
+const args = process.argv.slice(0,2);
 const [userIndex, userDirection] = args;
 console.log(userIndex);
 console.log(userDirection);
@@ -35,7 +35,7 @@ function incDec(userIndex, userDirection, userArray) {
   }
 }
 
-function CreateDuplicate(userIndex, a){
+function createDuplicate(userIndex, a){
   if ((userIndex < a.length) && (userIndex >= 0)){
     a.splice(userIndex, 1, a[userIndex], a[userIndex]);
     console.log(a);
@@ -55,6 +55,15 @@ function removeItem(userIndex, a){
   }
 }
 
-removeItem(userIndex, a)
-CreateDuplicate(userIndex, a)
-swap(userIndex, userDirection, a)
+
+function opAll(userIndex, userDirection = null, a) {
+  if (userIndex && userDirection && a) {
+      swap(userIndex, userDirection, a)
+  }
+  else {
+    removeItem(userIndex, a)
+    createDuplicate(userIndex, a)
+  }
+}
+
+opAll(userIndex, userDirection, a);

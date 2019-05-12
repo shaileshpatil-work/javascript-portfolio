@@ -1,4 +1,4 @@
-const multiArray = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
+const multiArray = [[1, 2, 3], [], [7, 8, 9]];
 console.log(multiArray);
 const args = process.argv.slice(2);
 const [outerArrayIndex, innerArrayIndex, userDirection] = args;
