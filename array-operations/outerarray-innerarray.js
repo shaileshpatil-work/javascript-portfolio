@@ -105,11 +105,9 @@ function innerArrayOperation(outerArrayIndex, innerArrayIndex, userDirection, mu
 }
 
 if(args.length == 3){
-    console.log("one");
     innerArrayOperation(outerArrayIndex, innerArrayIndex, userDirection, multiArray);
 }
 else {
-    console.log("two");
     outerArrayOperation(outerArrayIndex, innerArrayIndex, multiArray);
 }
 
