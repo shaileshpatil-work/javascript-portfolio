@@ -68,7 +68,6 @@ function innerArrayOperation(outerArrayIndex, innerArrayIndex, userDirection, mu
                 console.log("invalid");
             }
             else{
-                // String(userDirection);
                 if(userDirection == "up"){
                     let currentIndex = multiArray[outerArrayIndex][innerArrayIndex];
                     let prevIndex = multiArray[outerArrayIndex][Number(innerArrayIndex) - 1];
@@ -105,37 +104,48 @@ function innerArrayOperation(outerArrayIndex, innerArrayIndex, userDirection, mu
     }
 }
 
-function checkParams(outerArrayIndex, innerArrayIndex){
-    if (outerArrayIndex == 0) {
-        outerArrayIndex = "zero";
-    }
-    if (innerArrayIndex == 0) {
-        innerArrayIndex = "zero";
-    }
+if(args.length == 3){
+    console.log("one");
+    innerArrayOperation(outerArrayIndex, innerArrayIndex, userDirection, multiArray);
+}
+else {
+    console.log("two");
+    outerArrayOperation(outerArrayIndex, innerArrayIndex, multiArray);
 }
 
-function convertParams(outerArrayIndex, innerArrayIndex){
-    if (outerArrayIndex == "zero") {
-        outerArrayIndex = 0;
-    }
-    if (innerArrayIndex == "zero") {
-        innerArrayIndex = 0;
-    }
-}
+// function checkParams(outerArrayIndex, innerArrayIndex){
+//     if (outerArrayIndex == 0) {
+//         outerArrayIndex = "zero";
+//     }
+//     if (innerArrayIndex == 0) {
+//         innerArrayIndex = "zero";
+//     }
+// }
 
-function allOperation(outerArrayIndex, innerArrayIndex, userDirection, multiArray){
-   checkParams(outerArrayIndex, innerArrayIndex);
-   if(outerArrayIndex && innerArrayIndex && userDirection && multiArray){
-        convertParams(outerArrayIndex, innerArrayIndex);
-       innerArrayOperation(outerArrayIndex, innerArrayIndex, userDirection, multiArray)
-   }
-   else{
-        convertParams(outerArrayIndex, innerArrayIndex);
-       outerArrayOperation(outerArrayIndex, userDirection, multiArray);
-   }
-}
+// function convertParams(outerArrayIndex, innerArrayIndex){
+//     if (outerArrayIndex == "zero") {
+//         outerArrayIndex = 0;
+//     }
+//     if (innerArrayIndex == "zero") {
+//         innerArrayIndex = 0;
+//     }
+// }
 
-allOperation(outerArrayIndex, innerArrayIndex, userDirection, multiArray);
+
+// function allOperation(outerArrayIndex, innerArrayIndex, userDirection, multiArray){
+//    checkParams(outerArrayIndex, innerArrayIndex);
+//    if(outerArrayIndex && innerArrayIndex && userDirection && multiArray){
+//         convertParams(outerArrayIndex, innerArrayIndex);
+//        innerArrayOperation(outerArrayIndex, innerArrayIndex, userDirection, multiArray)
+//    }
+//    else{
+//        convertParams(outerArrayIndex, innerArrayIndex);
+//        outerArrayOperation(outerArrayIndex, userDirection, multiArray);
+//    }
+// }
+
+// allOperation(outerArrayIndex, innerArrayIndex, userDirection, multiArray);
+
 // allOperation(2,null,"up", multiArray);
 
 
