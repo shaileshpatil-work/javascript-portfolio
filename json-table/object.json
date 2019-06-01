@@ -1,0 +1,22 @@
+{
+    "data": [
+         {
+            "name": "abc",
+            "age": 23,
+            "address": "Pune"
+        },
+        {
+            "name": "abc",
+            "age": 23,
+            "address": "Pune"
+        },
+        {
+            "name": "abc",
+            "age": 23,
+            "address": {
+                "name": "John",
+                "sname": "Smith"
+            }
+        }
+    ]
+}

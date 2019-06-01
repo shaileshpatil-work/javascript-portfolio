@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        .modalWrap{
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            height: auto;
+            width: 600px;
+            background:#f7f8f9;
+            padding: 20px;
+            z-index: 1072;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div id="table-wrapper" class="table-responsive"></div>
+    </div>
+
+    <script>
+        fetch('https://jsonplaceholder.typicode.com/users')
+            .then((response) => response.json())
+            .then(data => detectData(data))
+
+        //Create col array to store th  
+        let col = [];
+
+        const detectData = (data) =>{
+            if(Array.isArray(data)){
+                createSearchBox();
+                createTable(data);
+            }
+            else{
+                createSearchBox();
+                createTable(data.data);
+            }
+        }
+
+        const createSearchBox = () => {
+            let input = document.createElement("input");
+            input.type = "text";
+            input.placeholder = "Search";
+            document.body.insertAdjacentElement("afterbegin", input);
+            Object.assign(input.style, { width: "30%", margin: "30px auto", display: "block", padding: "5px" });
+            filterTable(input);
+        }
+
+        const filterTable = (input) => {
+            input.addEventListener('keyup', function(e){
+                let filter, found, table, tr, td, i, j;
+                filter = input.value.toUpperCase();
+                table = document.getElementById("myTable");
+                tr = table.getElementsByTagName("tr");
+                //Starting from first row(Excluding th row) so i=1
+                for (i = 1; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td");
+                    for (j = 0; j < td.length; j++) {
+                        if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                            found = true;
+                        }
+                    }
+                    if (found) {
+                        tr[i].style.display = "";
+                        found = false;
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            })
+        }
+
+        const createTable = (data) => {
+            //Looping over array.
+            data.map(eachObj => {
+                //Looping over each object.
+                for (let key in eachObj) {
+                    //If key is not present then push.
+                    if (col.indexOf(key) === -1) {
+                        //Push value to col
+                        col.push(key);
+                    }
+                }
+            })
+
+            //Create dynamic table
+            let table = document.createElement("table");
+            table.setAttribute("id", "myTable");
+
+            //Create Table Header row using extracted headers above
+            let tr = table.insertRow(-1);
+
+            //Create Table header
+            col.map((colElement, key) => {
+                let th = document.createElement("th");
+                th.textContent = colElement;
+                tr.appendChild(th);
+                th.addEventListener("click", function(){
+                    sortTable(key);
+                });
+            })
+
+            for (let i = 0; i < data.length; i++) {
+
+                tr = table.insertRow(-1);
+
+                for (let j = 0; j < col.length; j++) {
+                    const tabCell = tr.insertCell(-1);
+                    const content = data[i][col[j]];
+
+                    if (typeof (content) == "object") {
+                        let btn = document.createElement("button");
+                        btn.textContent = "click";
+                        btn.addEventListener('click', () => {
+                            openModal(content);
+                        });
+                        tabCell.appendChild(btn);
+                    } else {
+                        tabCell.innerHTML = content;
+                    }
+                }
+            }
+
+            table.classList.add("table", "table-bordered");
+            document.getElementById("table-wrapper").appendChild(table);
+        }
+
+        const openModal = (content) => {
+            let modalWrapper = document.createElement("div");
+            modalWrapper.classList.add("modalWrap");
+
+            let h3 = document.createElement("h3");
+            h3.textContent = "Inner Table";
+            modalWrapper.appendChild(h3);
+            h3.classList.add("text-center");
+            
+            let backdrop = document.createElement("div");
+            backdrop.classList.add("modal-backdrop", "fade", "show");
+
+            modalWrapper.appendChild(createInnerTable(content));
+            document.body.appendChild(modalWrapper);
+            document.body.appendChild(backdrop);
+
+            let closeBtn = document.createElement("button");
+            closeBtn.textContent = "Close";
+            closeBtn.classList.add("btn","btn-secondary");
+            modalWrapper.appendChild(closeBtn);
+            
+            closeBtn.addEventListener("click", () => {
+                document.body.removeChild(modalWrapper);
+                document.body.removeChild(backdrop);
+            })
+        }
+
+        const createInnerTable = (content) => {
+            const innerCol = [];
+
+            for(let key in content){
+                if(innerCol.indexOf(key) === -1){
+                    innerCol.push(key);
+                }
+            }
+
+            //Create dynamic table
+            let table = document.createElement("table");
+
+            //Create Table Header row using extracted headers above
+            let tr = table.insertRow(-1);
+
+            //Create Table header
+            innerCol.map(colElement => {
+                let th = document.createElement("th");
+                th.textContent = colElement;
+                tr.appendChild(th);
+            })
+
+            tr = table.insertRow(-1);
+
+            for(let key in content){
+                const tabCell = tr.insertCell(-1);
+                const tabCellContent = content[key];
+                 if (typeof (tabCellContent) == "object") {
+                    let btn = document.createElement("button");
+                    btn.textContent = "click";
+                    btn.addEventListener('click', () => {
+                        openModal(tabCellContent);
+                        document.body.classList.add("background-change");
+                    });
+                    tabCell.appendChild(btn);
+                }
+                else {
+                    tabCell.innerHTML = tabCellContent;
+                }
+            }
+
+            table.classList.add("table", "table-bordered");
+            return table;
+        }
+
+        function sortTable(n) {
+                let table,
+                    rows,
+                    switching,
+                    i,
+                    x,
+                    y,
+                    shouldSwitch,
+                    dir,
+                    switchcount = 0;
+                table = document.getElementById("myTable");
+                switching = true;
+                //Set the sorting direction to ascending:
+                dir = "asc";
+                /*Make a loop that will continue until
+                no switching has been done:*/
+                while (switching) {
+                    //start by saying: no switching is done:
+                    switching = false;
+                    rows = table.getElementsByTagName("tr");
+                    /*Loop through all table rows (except the
+                    first, which contains table headers):*/
+                    for (i = 1; i < rows.length - 1; i++) { //Change i=0 if you have the header th a separate table.
+                        //start by saying there should be no switching:
+                        shouldSwitch = false;
+                        /*Get the two elements you want to compare,
+                        one from current row and one from the next:*/
+                        x = rows[i].getElementsByTagName("td")[n];
+                        y = rows[i + 1].getElementsByTagName("td")[n];
+                        /*check if the two rows should switch place,
+                        based on the direction, asc or desc:*/
+                        if (dir == "asc") {
+                            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                                //if so, mark as a switch and break the loop:
+                                shouldSwitch = true;
+                                break;
+                            }
+                        } else if (dir == "desc") {
+                            if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                                //if so, mark as a switch and break the loop:
+                                shouldSwitch = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (shouldSwitch) {
+                        /*If a switch has been marked, make the switch
+                        and mark that a switch has been done:*/
+                        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                        switching = true;
+                        //Each time a switch is done, increase this count by 1:
+                        switchcount++;
+                    } else {
+                        /*If no switching has been done AND the direction is "asc",
+                        set the direction to "desc" and run the while loop again.*/
+                        if (switchcount == 0 && dir == "asc") {
+                            dir = "desc";
+                            switching = true;
+                        }
+                    }
+                }
+            }
+    </script>
+</body>
+
+</html>
