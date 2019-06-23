@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
-        .modalWrap{
+        .modalWrap {
             position: fixed;
             top: 50%;
             left: 50%;
@@ -19,6 +19,25 @@
             background:#f7f8f9;
             padding: 20px;
             z-index: 1072;
+        }
+        #pager {
+            display: flex;
+            width: fit-content;
+            width: intrinsic;           /* Safari/WebKit uses a non-standard name */
+            width: -moz-max-content;    /* Firefox/Gecko */
+            width: -webkit-max-content; /* Chrome */
+        }
+        #pager li {
+            list-style-type: none;
+        }
+        #pager li a {
+            padding: 10px 15px;
+            cursor: pointer;   
+            display: block;                                                                                                                             
+        }
+        #pager li a.active {
+            background: #4285f4;
+            color: #ffffff;
         }
     </style>
 </head>
@@ -36,14 +55,20 @@
         //Create col array to store th  
         let col = [];
 
-        const detectData = (data) =>{
-            if(Array.isArray(data)){
+        const detectData = (data) => {
+            let table = document.createElement("table");
+            table.setAttribute("id", "myTable");
+            document.getElementById("table-wrapper").insertAdjacentElement("afterbegin", table);
+
+            if(Array.isArray(data)) {
                 createSearchBox();
-                createTable(data);
+                initRender(data, table);
+                pagination(data, table);
             }
-            else{
+            else {
                 createSearchBox();
-                createTable(data.data);
+                createTable(data.data, table);
+                pagination(data.data, table);
             }
         }
 
@@ -80,7 +105,7 @@
             })
         }
 
-        const createTable = (data) => {
+        const createTable = (data, table) => {
             //Looping over array.
             data.map(eachObj => {
                 //Looping over each object.
@@ -94,9 +119,7 @@
             })
 
             //Create dynamic table
-            let table = document.createElement("table");
-            table.setAttribute("id", "myTable");
-
+            table.innerHTML = "";
             //Create Table Header row using extracted headers above
             let tr = table.insertRow(-1);
 
@@ -132,7 +155,6 @@
             }
 
             table.classList.add("table", "table-bordered");
-            document.getElementById("table-wrapper").appendChild(table);
         }
 
         const openModal = (content) => {
@@ -269,6 +291,70 @@
                     }
                 }
             }
+            
+        const initRender = (data, table) => {
+            const dataArr = [];
+            for (i = 0; i < 5; i++) {
+                dataArr.push(data[i]);
+            }
+            createTable(dataArr, table);
+        }
+
+        const pagination = (data, table) => {
+           let numberOfRows = data.length,
+               rowsPerPage = 5,
+               numberOfPages = Math.ceil(numberOfRows / rowsPerPage);
+               
+               document.querySelector("#myTable").insertAdjacentHTML("afterend","<ul id = 'pager'><li class='before'><a><<</a></li></ul>");
+
+               for(i = 1; i <= numberOfPages; i++) {
+                   document.getElementById("pager").insertAdjacentHTML("beforeend", `<li><a>${i}</a></li>`);
+               }
+
+               document.getElementById("pager").insertAdjacentHTML("beforeend", "<li class= 'after'><a>>></a></li>");
+               
+               let activePages = document.querySelectorAll("#pager li a");
+               activePages[1].classList.add("active");
+
+                const activePager = (activePages) => {
+                    Array.from(activePages).map((pageNum) => {
+                        pageNum.classList.remove("active");
+                    })
+                }
+                
+               document.getElementById("pager").addEventListener("click", (e) => {
+                   if (e.target.tagName = "A" && e.target.textContent == "<<") {
+                       let activeNum = Number(document.querySelector("#pager li a.active").textContent);
+                       if((activeNum > 1)) {
+                           showRows((activeNum - 1), data);
+                           activePager(activePages);
+                           e.target.classList.add("active");
+                       }
+                   }
+                   else if (e.target.tagName = "A" && e.target.textContent == ">>") {
+                       let activeNum = Number(document.querySelector("#pager li a.active").textContent);
+                       console.log(activePages[activePages.length - 2].textContent)
+                           if(activeNum < activePages[activePages.length - 2].textContent) {
+                                showRows((activeNum + 1), data);
+                                activePager(activePages);
+                                e.target.classList.add("active");
+                           }
+                   }
+                   else if(e.target.tagName = "A") {
+                       showRows(e.target.textContent, data);
+                       activePager(activePages);
+                       e.target.classList.add("active");
+                   }
+                })
+               
+               function showRows(pageNum, data) {
+                   const dataArr = [];
+                    for(i = ((pageNum * rowsPerPage) - 5); i < (pageNum * rowsPerPage); i++) {
+                        dataArr.push(data[i]);
+                    }                      
+                    createTable(dataArr, table);
+               }
+        }
     </script>
 </body>
 
