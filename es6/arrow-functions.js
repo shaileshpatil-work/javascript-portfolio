@@ -36,3 +36,7 @@ function Video(title) {
 }
 const v = new Video("Javascript");
 //output Video{title: "Javascript"}
+
+
+
+//Don't use arrow functions for methods and constructors.
