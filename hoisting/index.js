@@ -1,4 +1,4 @@
-// JavaScript only hoists declarations, not initializations.If a variable is declared and initialized after using it, the value will be undefined.
+// JavaScript only hoists declarations, not initializations. If a variable is declared and initialized after using it, the value will be undefined.
 
 console.log(var1);
 var var1;

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <input type="text" onkeypress="javascript:return isNumber(event)" placeholder="Full Name">
+
+    <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+
+    <script>   
+         function isNumber(evt) {
+                var iKeyCode = (evt.which) ? evt.which : evt.keyCode;
+                if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57)){
+                    return false;
+                }
+                return true;
+        }   
+    </script>
+</body>
+</html>
