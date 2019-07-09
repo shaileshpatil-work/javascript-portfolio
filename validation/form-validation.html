@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Form Validation</title>
+    <style>
+        form {
+            width: 50%;
+        }
+        form input {
+            width: 50%;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <form>
+        <input type="text" placeholder="Enter Name" id="name">
+        <p id="help-block"></p>
+        <input type="submit">
+    </form>
+    
+    <script>
+        let userForm = document.forms[0];
+        userForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let nameVal = document.getElementById("name").value;
+                if(nameVal == ""){
+                    document.getElementById("help-block").innerHTML = 'Name is required';
+                }
+                else if (/^[A-Za-z0-9\s]+$/.test(nameVal)) {
+                    document.getElementById("help-block").innerHTML = 'Numbers are not allowed';
+                }
+                else if (/^[A-Za-z\s]+$/.test(nameVal)) {
+                    document.getElementById("help-block").innerHTML = '';
+                }
+        })
+    </script>
+</body>
+</html>
